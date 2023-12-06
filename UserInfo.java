@@ -47,7 +47,7 @@ public class UserInfo {
         this();
         
         this.userRole = userRoleEnum.customer;
-        this.ID = "To-Do: ID Creation";
+        this.ID = "To-Do - ID Creation";
         this.username = username;
         this.password = password;
         this.shippingAddress = new AddressInfo("", "", "", "");

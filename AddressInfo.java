@@ -147,10 +147,10 @@ public class AddressInfo {
             chunks = input.split(",");
         
             if(chunks.length == 4) {
-                chunks[0] = street;
-                chunks[1] = city;
-                chunks[2] = state;
-                chunks[3] = zip;
+                street = chunks[0];
+                city = chunks[1];
+                state = chunks[2];
+                zip = chunks[3];
             
                 output = new AddressInfo(street, city, state, zip);
             }
