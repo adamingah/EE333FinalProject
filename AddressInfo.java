@@ -4,6 +4,8 @@
  */
 package UMS;
 
+import java.util.regex.Pattern;
+
 /**
  *
  * @author jmyer
@@ -129,6 +131,17 @@ public class AddressInfo {
         return(output);
     }
     
+    public String toCustomTwo() {
+        String output = "";
+        
+        output += "<" + this.street + ">";
+        output += "<" + this.city + ">";
+        output += "<" + this.state + ">";
+        output += "<" + this.zip + ">";
+        
+        return(output);
+    }
+    
     // Ex: "street,city,state,zip"
     public static AddressInfo fromCSV(String input) {
         AddressInfo output = null;
@@ -202,6 +215,28 @@ public class AddressInfo {
             }
             output = new AddressInfo(street, city, state, zip);
         }
+        
+        return(output);
+    }
+    
+    public static AddressInfo fromCustomTwo(String input) {
+        AddressInfo output;
+        String street = "";
+        String city = "";
+        String state = "";
+        String zip = "";
+        
+        Pattern regex = Pattern.compile("<(.*)><(.*)><(.*)><(.*)>");
+        java.util.regex.Matcher matcher = regex.matcher(input);
+        
+        if(matcher.find() == true) {
+            street = matcher.group(1);
+            city = matcher.group(2);
+            state = matcher.group(3);
+            zip = matcher.group(4);
+        }
+        
+        output = new AddressInfo(street, city, state, zip);
         
         return(output);
     }

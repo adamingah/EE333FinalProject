@@ -34,8 +34,8 @@ public class UserInfo {
         this.username = "";
         this.email = "";
         this.password = "";
-        this.shippingAddress = null;
-        this.billingAddress = null;
+        this.shippingAddress = new AddressInfo("", "", "", "");
+        this.billingAddress = new AddressInfo("", "", "", "");
     }
     
     // This is the UserInfo constructor to use if only a username and password
@@ -195,8 +195,8 @@ public class UserInfo {
         output += this.username + ",";
         output += this.password + ",";
         output += this.email + ",";
-        output += this.shippingAddress.toCSV() + ",";
-        output += this.billingAddress.toCSV();
+        output += this.shippingAddress.toCustomTwo() + ",";
+        output += this.billingAddress.toCustomTwo();
         
         return(output);
     }
@@ -220,8 +220,6 @@ public class UserInfo {
         AddressInfo shippingAddress;
         AddressInfo billingAddress;
         userRoleEnum userRole;
-        String shippingAddressS = "";
-        String billingAddressS = "";
         String userRoleS = "";
         String ID = "";
         String username = "";
@@ -236,7 +234,7 @@ public class UserInfo {
         } else {
             chunks = input.split(",");
             
-            if(chunks.length == 13) {
+            if(chunks.length == 7) {
                 userRoleS = chunks[0];
                 ID = chunks[1];
                 username = chunks[2];
@@ -244,13 +242,8 @@ public class UserInfo {
                 email = chunks[4];
                 userRole = stringToUserRoleEnum(userRoleS);
                 
-                shippingAddressS += chunks[5] + "," + chunks[6] + "," + chunks[7] + "," + chunks[8];
-                billingAddressS += chunks[9] + "," + chunks[10] + "," + chunks[11] + "," + chunks[12];
-                
-                shippingAddress = AddressInfo.fromCSV(shippingAddressS);
-                billingAddress = AddressInfo.fromCSV(billingAddressS);
-                
-                
+                shippingAddress = AddressInfo.fromCustomTwo(chunks[5]);
+                billingAddress = AddressInfo.fromCustomTwo(chunks[6]);
                 
                 output = new UserInfo(userRole, ID, username, password, email, shippingAddress, billingAddress);
             }
