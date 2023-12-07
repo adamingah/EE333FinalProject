@@ -217,8 +217,8 @@ public class OrderInfo {
         }
         output += Integer.toString(quantityList[quantityList.length - 1]) + ",";
         
-        output += this.shippingAddress.toCSV() + ",";
-        output += this.billingAddress.toCSV() + ",";
+        output += this.shippingAddress.toCustomTwo() + ",";
+        output += this.billingAddress.toCustomTwo() + ",";
         output += this.orderStatus.toString() + ",";
         output += this.dateTime + ",";
         output += this.subtotal + ",";
@@ -256,7 +256,7 @@ public class OrderInfo {
     public static OrderInfo fromCSV(String input) {
         OrderInfo output = null;
         UserInfo user = null;
-        ArrayList<ProductInfo> productList = new ArrayList<ProductInfo>();
+        ArrayList<ProductInfo> productList = new ArrayList<>();
         int[] quantityList = new int[0];
         AddressInfo shippingAddress = null;
         AddressInfo billingAddress = null;
@@ -268,62 +268,31 @@ public class OrderInfo {
         String[] products;
         String[] quantities;
         int index;
-        int indexTwo;
-        String userS = "";
-        String shippingAddressS = "";
-        String billingAddressS = "";
         
         chunks = input.split(",");
         
-        if(chunks.length == 27) {
-            for(index = 0; index < 27; index++) {
-                if(index < 12) {                        
-                    // Constructing UserInfo instance
-                    userS += chunks[index] + ",";
-                } else if(index < 13) {
-                    userS += chunks[index];
-                    user = UserInfo.fromCSV(userS);
-                } else if(index < 14) {                 
-                    // Constructing ArrayList<ProductInfo>
-                    products = chunks[index].split(";");
-                    // Going through each product in toCustom form and adding it
-                    // to the product list.
-                    for(indexTwo = 0; indexTwo < products.length; indexTwo++) {
-                        System.out.println(products[indexTwo]);
-                        productList.add(ProductInfo.fromCustomTwo(products[indexTwo]));
-                    }
-                } else if(index < 15) {
-                    // Constructing int[] quantityList
-                    quantities = chunks[index].split(";");
-                    // Similar idea to the product list above.
-                    for(indexTwo = 0; indexTwo < quantities.length; indexTwo++) {
-                        quantityList = appendIntList(quantityList, Integer.valueOf(quantities[indexTwo]));
-                    }
-                } else if(index < 18) {
-                    // Constructing shiping address.
-                    shippingAddressS += chunks[index] + ",";
-                } else if(index < 19) {
-                    shippingAddressS += chunks[index];
-                    shippingAddress = AddressInfo.fromCSV(shippingAddressS);
-                } else if(index < 22) {
-                    // Constructing shiping address.
-                    billingAddressS += chunks[index] + ",";
-                } else if(index < 23) {
-                    billingAddressS += chunks[index];
-                    billingAddress = AddressInfo.fromCSV(billingAddressS);
-                } else if(index < 24) {
-                    orderStatus = stringToStatus(chunks[index]);
-                } else if(index < 25) {
-                    dateTime = chunks[index];
-                } else if(index < 26) {
-                    subtotal = Double.valueOf(chunks[index]);
-                } else if(index < 27) {
-                    cardNumber = chunks[index];
-                } else {
-                    System.out.println("In OrderInfo.fromCSV -- Warning: Index bounds exceed expected value!");
-                }
-                output = new OrderInfo(user, productList, quantityList, shippingAddress, billingAddress, orderStatus, dateTime, subtotal, cardNumber);
+        if(chunks.length == 15) {
+            
+            user = UserInfo.fromCSV(chunks[0] + "," + chunks[1] + "," + chunks[2] + "," + chunks[3] + "," + chunks[4] + "," + chunks[5] + "," + chunks[6]);
+            
+            products = chunks[7].split(";");
+            for(index = 0; index < products.length; index++) {
+                productList.add(ProductInfo.fromCustomTwo(products[index]));
             }
+            
+            quantities = chunks[8].split(";");
+            for(index = 0; index < quantities.length; index++) {
+                quantityList = appendIntList(quantityList, Integer.valueOf(quantities[index]));
+            }
+            
+            shippingAddress = AddressInfo.fromCustomTwo(chunks[9]);
+            billingAddress = AddressInfo.fromCustomTwo(chunks[10]);
+            orderStatus = stringToStatus(chunks[11]);
+            dateTime = chunks[12];
+            subtotal = Double.valueOf(chunks[13]);
+            cardNumber = chunks[14];
+            
+            output = new OrderInfo(user, productList, quantityList, shippingAddress, billingAddress, orderStatus, dateTime, subtotal, cardNumber);
         } else {
             System.out.println("In OrderInfo.fromCSV -- Warning: Unsupported order format!");
         }
