@@ -21,6 +21,7 @@ public class ProductInfo {
     private boolean availability;
     private double price;
     private int quantity;
+    private int numFields;
     
     
     
@@ -42,6 +43,7 @@ public class ProductInfo {
         availability = false;
         price = -1;
         quantity = -1;
+        numFields = 6;
     }
     
     // This is the full constructor to create an entirely new product, not 
@@ -122,6 +124,24 @@ public class ProductInfo {
         this.quantity = quantity;
     }
     
+    public int getNumFields() {
+        return numFields;
+    }
+
+    public void setNumFields(int numFields) {
+        this.numFields = numFields;
+    }
+    
+    
+    
+    
+    
+    /*
+    
+                Helper Functions
+    
+    */
+    
     // This is a helper function to add or subtract from the quantity of an item.
     // If there is too few of the item to subtract the desired amount, false is
     // returned from the function.
@@ -151,16 +171,13 @@ public class ProductInfo {
     
     */
     
-    public String toString() {
-        // To-Do: Figure out how to implement.
-        String output = "";
-        
-        return(output);
-    }
-    
     public String toCSV() {
         String output = "";
+        String[] chunks;
         
+        chunks = this.toString().split("@");
+        
+        output += chunks[0] + ",";
         output += this.ID + ",";
         output += this.manufacturer + ",";
         output += String.valueOf(this.availability) + ",";
@@ -173,6 +190,7 @@ public class ProductInfo {
     public String toCustom() {
         String output = "";
         
+        output += "Number of Fields: " + String.valueOf(this.numFields) + "\n";
         output += "ID: " + this.ID + "\n";
         output += "Manufacturer: " + this.manufacturer + "\n";
         output += "Availability: " + String.valueOf(this.availability) + "\n";
@@ -184,7 +202,11 @@ public class ProductInfo {
     
     public String toCustomTwo() {
         String output = "";
+        String[] chunks;
         
+        chunks = this.toString().split("@");
+        
+        output += "<" + chunks[0] + ">";
         output += "<" + this.ID + ">";
         output += "<" + this.manufacturer + ">";
         output += "<" + String.valueOf(this.availability) + ">";
@@ -201,15 +223,17 @@ public class ProductInfo {
         boolean availability;
         double price;
         int quantity;
+        String productType;
         String[] chunks;
         
         chunks = input.split(",");
-        if(chunks.length == 5) {
-            ID = chunks[0];
-            manufacturer = chunks[1];
-            availability = Boolean.valueOf(chunks[2]);
-            price = Double.valueOf(chunks[3]);
-            quantity = Integer.valueOf(chunks[4]);
+        if(chunks.length == 6) {
+            productType = chunks[0];
+            ID = chunks[1];
+            manufacturer = chunks[2];
+            availability = Boolean.valueOf(chunks[3]);
+            price = Double.valueOf(chunks[4]);
+            quantity = Integer.valueOf(chunks[5]);
             
             output = new ProductInfo(ID, manufacturer, availability, price, quantity);
         } else {
@@ -226,11 +250,12 @@ public class ProductInfo {
         boolean availability = false;
         double price = -1;
         int quantity = -1;
+        int numFields = -1;
         String[] chunks;
         String[] lines;
         
         lines = input.split("\n");
-        if(lines.length == 5) {
+        if(lines.length == 6) {
             for(int index = 0; index < lines.length; index++) {
                 chunks = lines[index].split(": ");
                 
@@ -244,6 +269,8 @@ public class ProductInfo {
                     price = Double.valueOf(chunks[1]);
                 } else if(chunks[0].equalsIgnoreCase("Quantity") == true) {
                     quantity = Integer.valueOf(chunks[1]);
+                } else if(chunks[0].equalsIgnoreCase("Number of Fields") == true) {
+                    numFields = Integer.valueOf(chunks[1]);
                 } else {
                     System.out.println("In ProductInfo.fromCustom -- Warning: Unsupported field!");
                 }
@@ -264,16 +291,18 @@ public class ProductInfo {
         boolean availability = false;
         double price = -1;
         int quantity = -1;
+        String productType;
         
-        Pattern regex = Pattern.compile("<(.*)><(.*)><(.*)><(.*)><(.*)>");
+        Pattern regex = Pattern.compile("<(.*)><(.*)><(.*)><(.*)><(.*)><(.*)>");
         java.util.regex.Matcher matcher = regex.matcher(input);
         
         if(matcher.find() == true) {
-            ID = matcher.group(1);
-            manufacturer = matcher.group(2);
-            availability = Boolean.valueOf(matcher.group(3));
-            price = Double.valueOf(matcher.group(4));
-            quantity = Integer.valueOf(matcher.group(5));
+            productType = matcher.group(3);
+            ID = matcher.group(2);
+            manufacturer = matcher.group(3);
+            availability = Boolean.valueOf(matcher.group(4));
+            price = Double.valueOf(matcher.group(5));
+            quantity = Integer.valueOf(matcher.group(6));
         }
         
         output = new ProductInfo(ID, manufacturer, availability, price, quantity);

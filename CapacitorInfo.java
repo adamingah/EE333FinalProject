@@ -12,9 +12,27 @@ public abstract class CapacitorInfo extends ProductInfo {
     int tolerancePlus;
     int toleranceMinus;
     double voltage;
-    int operatingTempPlus;
-    boardAdheranceEnum mountingType;
     
+    protected CapacitorInfo() {
+        super();
+        
+        this.capacitance = -1;
+        this.capacitancePrefix = -1;
+        this.tolerancePlus = -1;
+        this.toleranceMinus = -1;
+        this.voltage = -1;
+    }
+    
+    protected CapacitorInfo(String manufacturer, boolean availability, double price, int quantity, double capacitance, int capacitancePrefix, int tolerancePlue, int toleranceMinus, double voltage) {
+        // To-Do: Validation
+        super(manufacturer, availability, price, quantity);
+        
+        this.capacitance = capacitance;
+        this.capacitancePrefix = capacitancePrefix;
+        this.tolerancePlus = tolerancePlus;
+        this.toleranceMinus = toleranceMinus;
+        this.voltage = voltage;
+    }
 }
 
 /* 
@@ -26,28 +44,3 @@ Subcategories:
     - TrimmerAndVariableInfo
 
 */
-
-final class EDLCAndSupercapacitorInfo extends CapacitorInfo {
-     
-}
-
-final class MicaAndPTFEInfo extends CapacitorInfo {
-    String dielectricMaterial;
-    String features;
-    
-}
-
-final class NetworksAndArraysInfo extends CapacitorInfo {
-    int numCapacitors;
-    String circuitType;
-}
-
-final class TrimmerAndVariableInfo extends CapacitorInfo {
-    String adjustment;
-    double capacitanceRange;
-}
-
-enum boardAdheranceEnum {
-    THM,
-    SMD,
-}
