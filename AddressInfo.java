@@ -11,10 +11,10 @@ import java.util.regex.Pattern;
  * @author jmyer
  */
 public class AddressInfo {
-    String street;
-    String city;
-    String state;
-    String zip;
+    private String street;
+    private String city;
+    private String state;
+    private String zip;
     
     /*
     
@@ -105,10 +105,10 @@ public class AddressInfo {
     public String toCSV() {
         String output = "";
         
-        output += this.street + ",";
-        output += this.city + ",";
-        output += this.state + ",";
-        output += this.zip;
+        output += this.getStreet() + ",";
+        output += this.getCity() + ",";
+        output += this.getState() + ",";
+        output += this.getZip();
         
         return(output);
     }
@@ -123,10 +123,10 @@ public class AddressInfo {
     public String toCustom() {
         String output = "";
         
-        output += "Street: " + this.street + "\n";
-        output += "City: " + this.city + "\n";
-        output += "State: " + this.state + "\n";
-        output += "Zip: " + this.zip;
+        output += "Street: " + this.getStreet() + "\n";
+        output += "City: " + this.getCity() + "\n";
+        output += "State: " + this.getState() + "\n";
+        output += "Zip: " + this.getZip();
         
         return(output);
     }
@@ -134,10 +134,10 @@ public class AddressInfo {
     public String toCustomTwo() {
         String output = "";
         
-        output += "<" + this.street + ">";
-        output += "<" + this.city + ">";
-        output += "<" + this.state + ">";
-        output += "<" + this.zip + ">";
+        output += "<" + this.getStreet() + ">";
+        output += "<" + this.getCity() + ">";
+        output += "<" + this.getState() + ">";
+        output += "<" + this.getZip() + ">";
         
         return(output);
     }
@@ -240,4 +240,49 @@ public class AddressInfo {
         
         return(output);
     }
+    
+    
+    
+    
+    
+    
+    /*
+    
+                Getters/Setters
+    
+    */
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+    
+    
 }
