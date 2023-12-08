@@ -4,6 +4,12 @@
  */
 package GUI;
 
+import java.util.*;
+import GUI.*;
+import OMS.*;
+import PMS.*;
+import UMS.*;
+
 /**
  *
  * @author jmyer
@@ -27,6 +33,12 @@ public class UserInfoPanel extends javax.swing.JPanel {
     
     public String getPassword() {
         return(this.passwordTextField.getText());
+    }
+    
+    public void setFields(UserInfo user) {
+        this.usernameTextField.setText(user.getUsername());
+        this.passwordTextField.setText(user.getPassword());
+        this.emailTextField.setText(user.getEmail());
     }
 
     /**

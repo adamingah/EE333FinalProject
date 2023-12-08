@@ -4,11 +4,24 @@
  */
 package GUI;
 
+import java.util.*;
+import GUI.*;
+import OMS.*;
+import PMS.*;
+import UMS.*;
+
 /**
  *
  * @author jmyer
  */
 public class AddressInfoPanel extends javax.swing.JPanel {
+    
+    public void setAddress(AddressInfo address) {
+        this.cityTextField.setText(address.getCity());
+        this.streetTextField.setText(address.getStreet());
+        this.stateComboBox.setSelectedItem(address.getState());
+        this.zipTextField.setText(address.getZip());
+    }
 
     /**
      * Creates new form AddressInfoPanel

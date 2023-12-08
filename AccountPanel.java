@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+import java.util.*;
+import GUI.*;
+import OMS.*;
+import PMS.*;
+import UMS.*;
 
 /**
  *
@@ -15,6 +20,9 @@ public class AccountPanel extends javax.swing.JPanel {
      */
     public AccountPanel() {
         initComponents();
+        this.UCP_billAddressInfoPanel.setAddress(MainFrame.currentUser.getBillingAddress());
+        this.UCP_shipAddressInfoPanel.setAddress(MainFrame.currentUser.getShippingAddress());
+        this.UCP_userInfoPanel.setFields(MainFrame.currentUser);
     }
 
     /**

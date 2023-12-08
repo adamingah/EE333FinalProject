@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+import GUI.*;
+import java.util.*;
+import UMS.*;
+import OMS.*;
+import PMS.*;
 
 /**
  *
@@ -15,6 +20,14 @@ public class WelcomePanel extends javax.swing.JPanel {
      */
     public WelcomePanel() {
         initComponents();
+    }
+    
+    public String getUsername() {
+        return(this.UsernameField.getText());
+    }
+    
+    public String getPassword() {
+        return(this.PasswordField.getText());
     }
 
     /**
@@ -44,6 +57,11 @@ public class WelcomePanel extends javax.swing.JPanel {
         RegisterButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         RegisterButton.setText("Register");
         RegisterButton.setToolTipText("");
+        RegisterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegisterButtonActionPerformed(evt);
+            }
+        });
 
         PasswordField.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         PasswordField.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +79,11 @@ public class WelcomePanel extends javax.swing.JPanel {
 
         LoginButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         LoginButton.setText("Login");
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -118,6 +141,21 @@ public class WelcomePanel extends javax.swing.JPanel {
     private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PasswordFieldActionPerformed
+
+    private void RegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterButtonActionPerformed
+        // TODO add your handling code here:
+        new UserInfoCreationFrame().setVisible(true);
+    }//GEN-LAST:event_RegisterButtonActionPerformed
+
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
+        // TODO add your handling code here:
+        ArrayList<UserInfo> searchedUsers = UserSearch.searchByUsername(WelcomeFrame.userList, this.UsernameField.getText());
+        if(searchedUsers.size() == 1) {
+            System.out.println(searchedUsers.get(0).toCSV());
+            MainFrame newMainFrame = new MainFrame(searchedUsers.get(0));
+            newMainFrame.setVisible(true);
+        }
+    }//GEN-LAST:event_LoginButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

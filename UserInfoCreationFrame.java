@@ -3,9 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import static GUI.WelcomeFrame.userList;
+import OMS.FileIO;
 import UMS.UserInfo;
 import UMS.AddressInfo;
 import UMS.UserInfo.*;
+import UMS.UserSearch;
+import java.util.ArrayList;
 
 /**
  *
@@ -121,10 +125,23 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
         // To-Do: Validation
-        AddressInfo newShippingAddress = new AddressInfo(this.shippingAddressPanel.getStreet(), this.shippingAddressPanel.getCity(), this.shippingAddressPanel.getState(), this.shippingAddressPanel.getZip());
-        AddressInfo newBillingAddress = new AddressInfo(this.billingAddressPanel.getStreet(), this.billingAddressPanel.getCity(), this.billingAddressPanel.getState(), this.billingAddressPanel.getZip());
-        UserInfo newUser = new UserInfo(this.userInfoPanel.getUsername(), this.userInfoPanel.getPassword(), this.userInfoPanel.getEmail(), newShippingAddress, newBillingAddress);
-        System.out.println(newUser.toCSV());
+        if(UserSearch.searchByUsername(WelcomeFrame.userList, this.userInfoPanel.getUsername()).size() == 0) {
+            AddressInfo newShippingAddress = new AddressInfo(this.shippingAddressPanel.getStreet(), this.shippingAddressPanel.getCity(), this.shippingAddressPanel.getState(), this.shippingAddressPanel.getZip());
+            AddressInfo newBillingAddress = new AddressInfo(this.billingAddressPanel.getStreet(), this.billingAddressPanel.getCity(), this.billingAddressPanel.getState(), this.billingAddressPanel.getZip());
+            UserInfo newUser = new UserInfo(this.userInfoPanel.getUsername(), this.userInfoPanel.getPassword(), this.userInfoPanel.getEmail(), newShippingAddress, newBillingAddress);
+            WelcomeFrame.userList.add(newUser);
+            
+            FileIO.exportOrders(WelcomeFrame.orderList);
+            FileIO.exportUsers(WelcomeFrame.userList);
+            FileIO.exportProducts(WelcomeFrame.productList);
+            
+            ArrayList<UserInfo> searchedUsers = UserSearch.searchByUsername(WelcomeFrame.userList, this.userInfoPanel.getUsername());
+            if(searchedUsers.size() == 1) {
+                System.out.println(searchedUsers.get(0).toCSV());
+                MainFrame newMainFrame = new MainFrame(searchedUsers.get(0));
+                newMainFrame.setVisible(true);
+            }
+        }
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
     private void shippingBillingSameCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shippingBillingSameCheckBoxActionPerformed

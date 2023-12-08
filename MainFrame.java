@@ -4,17 +4,32 @@
  */
 package GUI;
 
+import java.util.*;
+import GUI.*;
+import static GUI.SearchedProductsPanel.productsToDisplay;
+import OMS.*;
+import PMS.*;
+import UMS.*;
+
 /**
  *
  * @author tyler
  */
 public class MainFrame extends javax.swing.JFrame {
+    public static UserInfo currentUser;
+    public static OrderInfo currentOrder;
 
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public MainFrame(UserInfo user) {
+        currentUser = user;
         initComponents();
+        this.navigatorPanel1.setBrowseItemsPanelVisibility(true);
+        this.navigatorPanel1.setShoppingCartPanelVisibility(false);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
+        this.navigatorPanel1.setSearchedProductsPanelVisibility(false);
+        this.navigatorPanel1.setAccountPanelVisibility(false);
     }
 
     /**
@@ -26,22 +41,115 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        navigatorPanel1 = new GUI.NavigatorPanel();
+        accountInformationButton = new javax.swing.JButton();
+        browseItemsButton = new javax.swing.JButton();
+        shoppingCartButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 600));
+
+        accountInformationButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        accountInformationButton.setText("Account Information");
+        accountInformationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accountInformationButtonActionPerformed(evt);
+            }
+        });
+
+        browseItemsButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        browseItemsButton.setText("Browse Items");
+        browseItemsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseItemsButtonActionPerformed(evt);
+            }
+        });
+        browseItemsButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                browseItemsButtonKeyPressed(evt);
+            }
+        });
+
+        shoppingCartButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        shoppingCartButton.setText("Shopping Cart");
+        shoppingCartButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                shoppingCartButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(navigatorPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(browseItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(shoppingCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(accountInformationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(shoppingCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(accountInformationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(browseItemsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(navigatorPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void shoppingCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shoppingCartButtonActionPerformed
+        // TODO add your handling code here:
+        this.navigatorPanel1.setBrowseItemsPanelVisibility(false);
+        this.navigatorPanel1.setShoppingCartPanelVisibility(true);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
+        this.navigatorPanel1.setSearchedProductsPanelVisibility(false);
+        this.navigatorPanel1.setAccountPanelVisibility(false);
+        
+        currentOrder = new OrderInfo(this.currentUser, this.navigatorPanel1.searchedProductsPanel1.productsToOrder, this.navigatorPanel1.searchedProductsPanel1.quantityList);
+        this.navigatorPanel1.shoppingCartPanel1.updateFields(currentOrder);
+    }//GEN-LAST:event_shoppingCartButtonActionPerformed
+
+    private void browseItemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseItemsButtonActionPerformed
+        // TODO add your handling code here:
+        this.navigatorPanel1.setBrowseItemsPanelVisibility(true);
+        this.navigatorPanel1.setShoppingCartPanelVisibility(false);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
+        this.navigatorPanel1.setSearchedProductsPanelVisibility(false);
+        this.navigatorPanel1.setAccountPanelVisibility(false);
+    }//GEN-LAST:event_browseItemsButtonActionPerformed
+
+    private void accountInformationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountInformationButtonActionPerformed
+        // TODO add your handling code here:
+        this.navigatorPanel1.setBrowseItemsPanelVisibility(false);
+        this.navigatorPanel1.setShoppingCartPanelVisibility(false);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
+        this.navigatorPanel1.setSearchedProductsPanelVisibility(false);
+        this.navigatorPanel1.setAccountPanelVisibility(true);
+    }//GEN-LAST:event_accountInformationButtonActionPerformed
+
+    private void browseItemsButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_browseItemsButtonKeyPressed
+        // TODO add your handling code here:
+        this.navigatorPanel1.setBrowseItemsPanelVisibility(false);
+        this.navigatorPanel1.setShoppingCartPanelVisibility(false);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
+        this.navigatorPanel1.setSearchedProductsPanelVisibility(true);
+        this.navigatorPanel1.setAccountPanelVisibility(false);
+    }//GEN-LAST:event_browseItemsButtonKeyPressed
 
     /**
      * @param args the command line arguments
@@ -73,11 +181,16 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                new MainFrame(currentUser).setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton accountInformationButton;
+    private javax.swing.JButton browseItemsButton;
+    private GUI.NavigatorPanel navigatorPanel1;
+    private javax.swing.JButton shoppingCartButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,11 +4,21 @@
  */
 package GUI;
 
+import java.util.*;
+import GUI.*;
+import OMS.*;
+import PMS.*;
+import UMS.*;
+
 /**
  *
  * @author tyler
  */
 public class WelcomeFrame extends javax.swing.JFrame {
+    
+    public static ArrayList<UserInfo> userList;
+    public static ArrayList<ProductInfo> productList;
+    public static ArrayList<OrderInfo> orderList;
 
     /**
      * Creates new form LoginFrame
@@ -29,6 +39,11 @@ public class WelcomeFrame extends javax.swing.JFrame {
         welcomePanel1 = new GUI.WelcomePanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -49,6 +64,10 @@ public class WelcomeFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -82,6 +101,10 @@ public class WelcomeFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new WelcomeFrame().setVisible(true);
+                userList = FileIO.importUsers();
+                productList = FileIO.importProducts();
+                System.out.println("HIHI" + productList.size() + "HIHI");
+                orderList = FileIO.importOrders();
             }
         });
     }
