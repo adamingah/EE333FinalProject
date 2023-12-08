@@ -15,10 +15,13 @@ public class ProductSearch {
         ArrayList<ProductInfo> searchResults = new ArrayList<>();
         ProductInfo currentProduct;
         int index = 0;
+        System.out.println(productList.size());
         
         for(index = 0; index < productList.size(); index++) {
             currentProduct = productList.get(index);
+            System.out.println(productList.get(index).toCSV());
             if(currentProduct.getID().equalsIgnoreCase(IDToSearch) == true) {
+                System.out.println("SUCCESS");
                 searchResults.add(currentProduct);
             }
         }
