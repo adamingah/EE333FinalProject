@@ -108,55 +108,57 @@ public class Manager {
 //            }
 
 
-            ProductInfo productD = new ProductInfo("ID003", "Myers Electronics", true, 15, 199999);
+//            ProductInfo productD = new ProductInfo("ID003", "Myers Electronics", true, 15, 199999);
 //            System.out.println(productD.toString());
 //            
 //            ProductInfo productE = new EDLCAndSupercapacitorInfo("Ramos Electornics", true, 16, 1222, 44, -9, 15, 15, 30);
 //            System.out.println(productE.toString());
-
-
-
-
-
-
-
-
-
-
-
-
-
-            AddressInfo addressA = new AddressInfo("1234 Main Street", "Paris", "Texas", "44556");
-            AddressInfo addressB = AddressInfo.fromCustomTwo(addressA.toCustomTwo());
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//            AddressInfo addressA = new AddressInfo("1234 Main Street", "Paris", "Texas", "44556");
+//            AddressInfo addressB = AddressInfo.fromCustomTwo(addressA.toCustomTwo());
 //            System.out.println(addressB.toCustom());
-            
-            UserInfo userD = new UserInfo("Tip", "CoolGuy123", "coolguy123@gmail.com", addressA, addressB);
-            UserInfo userE = UserInfo.fromCSV(userD.toCSV());
+//            
+//            UserInfo userD = new UserInfo("Tip", "CoolGuy123", "coolguy123@gmail.com", addressA, addressB);
+//            UserInfo userE = UserInfo.fromCSV(userD.toCSV());
 //            System.out.println(userE.toCSV());
+//            
+//            ProductInfo productF = new ProductInfo("ID004", "Yarbrough Electronics", true, 15, 1166);
+//            ArrayList<ProductInfo> productListB = new ArrayList<>();
+//            productListB.add(productD);
+//            productListB.add(productF);
+//            int[] quantityListC = new int[]{12, 22};
+//            
+//            OrderInfo orderD = new OrderInfo(userE, productListB, quantityListC, addressA, addressB, statusEnum.ordered, "12:12:12:12:12", 15, "123532498");
+//            OrderInfo orderE = OrderInfo.fromCSV(orderD.toCSV());
+//            System.out.println();
+//            System.out.println();
+//            System.out.println(orderE.toCSV());
+//            
+//            ArrayList<OrderInfo> orderListB = new ArrayList<>();
+//            orderListB.add(orderD);
+//            orderListB.add(orderE);
+//            
+//            ArrayList<UserInfo> userListB = new ArrayList<>();
+//            userListB.add(userD);
+//            userListB.add(userE);
+//            
+//            FileIO.exportOrders(orderListB);
+//            FileIO.exportProducts(productListB);
+//            FileIO.exportUsers(userListB);
             
-            ProductInfo productF = new ProductInfo("ID004", "Yarbrough Electronics", true, 15, 1166);
-            ArrayList<ProductInfo> productListB = new ArrayList<>();
-            productListB.add(productD);
-            productListB.add(productF);
-            int[] quantityListC = new int[]{12, 22};
-            
-            OrderInfo orderD = new OrderInfo(userE, productListB, quantityListC, addressA, addressB, statusEnum.ordered, "12:12:12:12:12", 15, "123532498");
-            OrderInfo orderE = OrderInfo.fromCSV(orderD.toCSV());
-            System.out.println();
-            System.out.println();
-            System.out.println(orderE.toCSV());
-            
-            ArrayList<OrderInfo> orderListB = new ArrayList<>();
-            orderListB.add(orderD);
-            orderListB.add(orderE);
-            
-            ArrayList<UserInfo> userListB = new ArrayList<>();
-            userListB.add(userD);
-            userListB.add(userE);
-            
-            FileIO.exportOrders(orderListB);
-            FileIO.exportProducts(productListB);
-            FileIO.exportUsers(userListB);
+            System.out.println(FileIO.importUsers().size());
             
         } else {
             
