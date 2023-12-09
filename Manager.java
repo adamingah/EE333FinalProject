@@ -13,6 +13,7 @@ import PMS.TrimmerAndVariableInfo;
 import UMS.AddressInfo;
 import UMS.UserInfo;
 import java.util.*;
+import GUI.*;
 
 /**
  *
@@ -24,7 +25,11 @@ public class Manager {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if(args[0].equalsIgnoreCase("/beta") == true) {
+        
+        WelcomeFrame.main(args);
+        
+        
+//        if(args[0].equalsIgnoreCase("/beta") == true) {
 //            UserInfo userA = new UserInfo("Tip", "Password1");
 //            System.out.println(userA.toCSV());
 //            System.out.println();
@@ -158,11 +163,11 @@ public class Manager {
 //            FileIO.exportProducts(productListB);
 //            FileIO.exportUsers(userListB);
             
-            System.out.println(FileIO.importUsers().size());
-            
-        } else {
-            
-        }
+//            System.out.println(FileIO.importUsers().size());
+//            
+//        } else {
+//            
+//        }
     }
     
 }
