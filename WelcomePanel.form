@@ -17,7 +17,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
@@ -36,8 +36,12 @@
                       </Group>
                   </Group>
                   <Component id="jLabel1" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="comboNotFoundLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="200" max="32767" attributes="0"/>
+              <EmptySpace pref="227" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,7 +58,9 @@
               <Component id="PasswordFieldLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="PasswordField" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="comboNotFoundLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="RegisterButton" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="LoginButton" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
@@ -138,6 +144,11 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Welcome to DigiKey"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="comboNotFoundLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Username/Password Combination Not Found."/>
       </Properties>
     </Component>
   </SubComponents>

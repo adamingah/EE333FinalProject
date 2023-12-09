@@ -9,6 +9,7 @@ import GUI.*;
 import OMS.*;
 import PMS.*;
 import UMS.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,6 +54,11 @@ public class ShoppingCartPanel extends javax.swing.JPanel {
         totalLabel = new javax.swing.JLabel();
 
         proceedToCheckoutButton.setText("Proceed To Checkout");
+        proceedToCheckoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proceedToCheckoutButtonActionPerformed(evt);
+            }
+        });
 
         previousPageButton.setText("Previous Page");
 
@@ -143,6 +149,15 @@ public class ShoppingCartPanel extends javax.swing.JPanel {
                 .addContainerGap(102, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void proceedToCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proceedToCheckoutButtonActionPerformed
+        // TODO add your handling code here:
+        WelcomeFrame.currentOrder = new OrderInfo(WelcomeFrame.currentUser, SearchedProductsPanel.productsToOrder, SearchedProductsPanel.quantityList, WelcomeFrame.currentUser.getShippingAddress(), WelcomeFrame.currentUser.getBillingAddress());
+        System.out.println(WelcomeFrame.currentOrder.toCSV());
+        WelcomeFrame.orderList.add(WelcomeFrame.currentOrder);
+        FileIO.exportOrders(WelcomeFrame.orderList);
+        JOptionPane.showMessageDialog(this, WelcomeFrame.currentOrder.toCustom(), "Your Order:", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_proceedToCheckoutButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

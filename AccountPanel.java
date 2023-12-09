@@ -14,15 +14,22 @@ import UMS.*;
  * @author tyler
  */
 public class AccountPanel extends javax.swing.JPanel {
+    private UserInfo testUser = new UserInfo("", "");
 
     /**
      * Creates new form AccountPanel
      */
     public AccountPanel() {
         initComponents();
-        this.UCP_billAddressInfoPanel.setAddress(MainFrame.currentUser.getBillingAddress());
-        this.UCP_shipAddressInfoPanel.setAddress(MainFrame.currentUser.getShippingAddress());
-        this.UCP_userInfoPanel.setFields(MainFrame.currentUser);
+        this.UCP_billAddressInfoPanel.setAddress(this.testUser.getBillingAddress());
+        this.UCP_shipAddressInfoPanel.setAddress(this.testUser.getShippingAddress());
+        this.UCP_userInfoPanel.setFields(this.testUser);
+    }
+    
+    public void updateFields() {
+        this.UCP_billAddressInfoPanel.setAddress(WelcomeFrame.currentUser.getBillingAddress());
+        this.UCP_shipAddressInfoPanel.setAddress(WelcomeFrame.currentUser.getShippingAddress());
+        this.UCP_userInfoPanel.setFields(WelcomeFrame.currentUser);
     }
 
     /**

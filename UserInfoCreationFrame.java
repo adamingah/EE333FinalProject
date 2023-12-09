@@ -22,6 +22,7 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
      */
     public UserInfoCreationFrame() {
         initComponents();
+        this.takenUsernameLabel.setVisible(false);
     }
 
     /**
@@ -41,6 +42,7 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
         shippingBillingSameCheckBox = new javax.swing.JCheckBox();
         shippingAddressLabel = new javax.swing.JLabel();
         billingAddressLabel = new javax.swing.JLabel();
+        takenUsernameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,22 +69,12 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
         billingAddressLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         billingAddressLabel.setText("Billing Address");
 
+        takenUsernameLabel.setText("This username is taken.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(shippingBillingSameCheckBox)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(userInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(shippingAddressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(billingAddressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 36, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addComponent(createAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(accountCreationLabel)
@@ -96,6 +88,20 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(billingAddressLabel)
                         .addGap(90, 90, 90))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(shippingBillingSameCheckBox)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(shippingAddressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(billingAddressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(takenUsernameLabel)
+                            .addComponent(createAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,6 +121,8 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(billingAddressPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(takenUsernameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(createAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -126,6 +134,7 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         // To-Do: Validation
         if(UserSearch.searchByUsername(WelcomeFrame.userList, this.userInfoPanel.getUsername()).size() == 0) {
+            this.takenUsernameLabel.setVisible(false);
             AddressInfo newShippingAddress = new AddressInfo(this.shippingAddressPanel.getStreet(), this.shippingAddressPanel.getCity(), this.shippingAddressPanel.getState(), this.shippingAddressPanel.getZip());
             AddressInfo newBillingAddress = new AddressInfo(this.billingAddressPanel.getStreet(), this.billingAddressPanel.getCity(), this.billingAddressPanel.getState(), this.billingAddressPanel.getZip());
             UserInfo newUser = new UserInfo(this.userInfoPanel.getUsername(), this.userInfoPanel.getPassword(), this.userInfoPanel.getEmail(), newShippingAddress, newBillingAddress);
@@ -138,9 +147,13 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
             ArrayList<UserInfo> searchedUsers = UserSearch.searchByUsername(WelcomeFrame.userList, this.userInfoPanel.getUsername());
             if(searchedUsers.size() == 1) {
                 System.out.println(searchedUsers.get(0).toCSV());
-                MainFrame newMainFrame = new MainFrame(searchedUsers.get(0));
+                WelcomeFrame.currentUser = searchedUsers.get(0);
+                MainFrame newMainFrame = new MainFrame();
+                this.setVisible(false);
                 newMainFrame.setVisible(true);
             }
+        } else {
+            this.takenUsernameLabel.setVisible(true);
         }
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
@@ -192,6 +205,7 @@ public class UserInfoCreationFrame extends javax.swing.JFrame {
     private javax.swing.JLabel shippingAddressLabel;
     private GUI.AddressInfoPanel shippingAddressPanel;
     private javax.swing.JCheckBox shippingBillingSameCheckBox;
+    private javax.swing.JLabel takenUsernameLabel;
     private GUI.UserInfoPanel userInfoPanel;
     // End of variables declaration//GEN-END:variables
 }

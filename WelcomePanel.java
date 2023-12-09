@@ -20,6 +20,7 @@ public class WelcomePanel extends javax.swing.JPanel {
      */
     public WelcomePanel() {
         initComponents();
+        this.comboNotFoundLabel.setVisible(false);
     }
     
     public String getUsername() {
@@ -46,6 +47,7 @@ public class WelcomePanel extends javax.swing.JPanel {
         PasswordFieldLabel = new javax.swing.JLabel();
         LoginButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        comboNotFoundLabel = new javax.swing.JLabel();
 
         UsernameField.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         UsernameField.addActionListener(new java.awt.event.ActionListener() {
@@ -91,12 +93,14 @@ public class WelcomePanel extends javax.swing.JPanel {
         jLabel1.setText("Welcome to DigiKey");
         jLabel1.setToolTipText("");
 
+        comboNotFoundLabel.setText("Username/Password Combination Not Found.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
+                .addGap(173, 173, 173)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
@@ -110,8 +114,11 @@ public class WelcomePanel extends javax.swing.JPanel {
                                     .addComponent(RegisterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                                     .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(200, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(comboNotFoundLabel)))
+                .addContainerGap(227, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +133,9 @@ public class WelcomePanel extends javax.swing.JPanel {
                 .addComponent(PasswordFieldLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboNotFoundLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RegisterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -148,12 +157,25 @@ public class WelcomePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_RegisterButtonActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        // TODO add your handling code here:
+        // User login handling
         ArrayList<UserInfo> searchedUsers = UserSearch.searchByUsername(WelcomeFrame.userList, this.UsernameField.getText());
-        if(searchedUsers.size() == 1) {
-            System.out.println(searchedUsers.get(0).toCSV());
-            MainFrame newMainFrame = new MainFrame(searchedUsers.get(0));
-            newMainFrame.setVisible(true);
+        if(searchedUsers.size() == 1 && searchedUsers.get(0).getPassword().equals(this.PasswordField.getText())) {
+            if(searchedUsers.get(0).getUserRoleAsString().equalsIgnoreCase("customer") == true) {
+                this.comboNotFoundLabel.setVisible(false);
+                MainFrame newMainFrame = new MainFrame();
+                WelcomeFrame.currentUser = searchedUsers.get(0);
+                this.setVisible(false);
+                newMainFrame.setVisible(true);
+            } else if(searchedUsers.get(0).getUserRoleAsString().equalsIgnoreCase("employee") == true) {
+                this.comboNotFoundLabel.setVisible(false);
+                EmployeeViewFrame newEmployeeViewFrame = new EmployeeViewFrame();
+                WelcomeFrame.currentUser = searchedUsers.get(0);
+                this.setVisible(false);
+                newEmployeeViewFrame.setVisible(true);
+                
+            }
+        } else {
+            this.comboNotFoundLabel.setVisible(true);
         }
     }//GEN-LAST:event_LoginButtonActionPerformed
 
@@ -165,6 +187,7 @@ public class WelcomePanel extends javax.swing.JPanel {
     private javax.swing.JButton RegisterButton;
     private javax.swing.JTextField UsernameField;
     private javax.swing.JLabel UsernameFieldLabel;
+    private javax.swing.JLabel comboNotFoundLabel;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

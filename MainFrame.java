@@ -16,20 +16,18 @@ import UMS.*;
  * @author tyler
  */
 public class MainFrame extends javax.swing.JFrame {
-    public static UserInfo currentUser;
-    public static OrderInfo currentOrder;
 
     /**
      * Creates new form MainFrame
      */
-    public MainFrame(UserInfo user) {
-        currentUser = user;
+    public MainFrame() {
         initComponents();
         this.navigatorPanel1.setBrowseItemsPanelVisibility(true);
         this.navigatorPanel1.setShoppingCartPanelVisibility(false);
         this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
         this.navigatorPanel1.setSearchedProductsPanelVisibility(false);
         this.navigatorPanel1.setAccountPanelVisibility(false);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
     }
 
     /**
@@ -47,7 +45,6 @@ public class MainFrame extends javax.swing.JFrame {
         shoppingCartButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 600));
 
         accountInformationButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         accountInformationButton.setText("Account Information");
@@ -82,29 +79,28 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(navigatorPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(navigatorPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addComponent(browseItemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
+                        .addGap(33, 33, 33)
                         .addComponent(shoppingCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(accountInformationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGap(19, 19, 19))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(browseItemsButton)
                     .addComponent(shoppingCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(accountInformationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(browseItemsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(accountInformationButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(navigatorPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
         );
@@ -119,9 +115,12 @@ public class MainFrame extends javax.swing.JFrame {
         this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
         this.navigatorPanel1.setSearchedProductsPanelVisibility(false);
         this.navigatorPanel1.setAccountPanelVisibility(false);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
         
-        currentOrder = new OrderInfo(this.currentUser, this.navigatorPanel1.searchedProductsPanel1.productsToOrder, this.navigatorPanel1.searchedProductsPanel1.quantityList);
-        this.navigatorPanel1.shoppingCartPanel1.updateFields(currentOrder);
+        if(this.navigatorPanel1.searchedProductsPanel1.productsToOrder.size() > 0) {
+            WelcomeFrame.currentOrder = new OrderInfo(WelcomeFrame.currentUser, this.navigatorPanel1.searchedProductsPanel1.productsToOrder, this.navigatorPanel1.searchedProductsPanel1.quantityList);
+            this.navigatorPanel1.shoppingCartPanel1.updateFields(WelcomeFrame.currentOrder);
+        }
     }//GEN-LAST:event_shoppingCartButtonActionPerformed
 
     private void browseItemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseItemsButtonActionPerformed
@@ -131,15 +130,18 @@ public class MainFrame extends javax.swing.JFrame {
         this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
         this.navigatorPanel1.setSearchedProductsPanelVisibility(false);
         this.navigatorPanel1.setAccountPanelVisibility(false);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
     }//GEN-LAST:event_browseItemsButtonActionPerformed
 
     private void accountInformationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountInformationButtonActionPerformed
         // TODO add your handling code here:
+        this.navigatorPanel1.accountPanel1.updateFields();
         this.navigatorPanel1.setBrowseItemsPanelVisibility(false);
         this.navigatorPanel1.setShoppingCartPanelVisibility(false);
         this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
         this.navigatorPanel1.setSearchedProductsPanelVisibility(false);
         this.navigatorPanel1.setAccountPanelVisibility(true);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
     }//GEN-LAST:event_accountInformationButtonActionPerformed
 
     private void browseItemsButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_browseItemsButtonKeyPressed
@@ -149,6 +151,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
         this.navigatorPanel1.setSearchedProductsPanelVisibility(true);
         this.navigatorPanel1.setAccountPanelVisibility(false);
+        this.navigatorPanel1.setOrderInfoCollectionPanelVisibility(false);
     }//GEN-LAST:event_browseItemsButtonKeyPressed
 
     /**
@@ -181,7 +184,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame(currentUser).setVisible(true);
+                new MainFrame().setVisible(true);
             }
         });
         

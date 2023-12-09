@@ -223,6 +223,7 @@ public class SearchedProductsPanel extends javax.swing.JPanel {
            quantityList = OrderInfo.appendIntList(quantityList, 1);
         }
         quantityList[0]++;
+        this.timesButtonOnePressed++;
     }//GEN-LAST:event_addButtonOneActionPerformed
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed

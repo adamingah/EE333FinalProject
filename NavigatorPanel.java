@@ -31,6 +31,10 @@ public class NavigatorPanel extends javax.swing.JPanel {
     public void setAccountPanelVisibility(boolean input) {
         this.accountPanel1.setVisible(input);
     }
+    
+    public void orderConfirmedPanelVisibility(boolean input) {
+        this.orderConfirmedPanel1.setVisible(input);
+    }
 
     /**
      * Creates new form NavigatorPanel
@@ -48,24 +52,27 @@ public class NavigatorPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        browseItemsPanel1 = new GUI.BrowseItemsPanel();
         shoppingCartPanel1 = new GUI.ShoppingCartPanel();
         searchedProductsPanel1 = new GUI.SearchedProductsPanel();
         orderInfoCollectionPanel1 = new GUI.OrderInfoCollectionPanel();
+        browseItemsPanel1 = new GUI.BrowseItemsPanel();
         accountPanel1 = new GUI.AccountPanel();
+        orderConfirmedPanel1 = new GUI.OrderConfirmedPanel();
 
         setLayout(new java.awt.CardLayout());
-        add(browseItemsPanel1, "card2");
         add(shoppingCartPanel1, "card3");
         add(searchedProductsPanel1, "card4");
         add(orderInfoCollectionPanel1, "card5");
+        add(browseItemsPanel1, "card2");
         add(accountPanel1, "card6");
+        add(orderConfirmedPanel1, "card7");
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public GUI.AccountPanel accountPanel1;
     public GUI.BrowseItemsPanel browseItemsPanel1;
+    public GUI.OrderConfirmedPanel orderConfirmedPanel1;
     public GUI.OrderInfoCollectionPanel orderInfoCollectionPanel1;
     public GUI.SearchedProductsPanel searchedProductsPanel1;
     public GUI.ShoppingCartPanel shoppingCartPanel1;

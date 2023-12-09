@@ -7,6 +7,7 @@ import PMS.*;
 import OMS.*;
 import UMS.*;
 import java.util.*;
+import java.io.*;
 
 /**
  *
@@ -19,6 +20,24 @@ public class BrowseItemsPanel extends javax.swing.JPanel {
      */
     public BrowseItemsPanel() {
         initComponents();
+        
+        String[] allCategories;
+        
+        this.categoryComboBox.removeAll();
+        
+        File abbreviationsFile = new File("listOfCategories.txt");
+        
+        String line;
+        try {
+            java.io.FileReader abbreviationsFileReader = new java.io.FileReader(abbreviationsFile);
+            java.io.BufferedReader abbreviationsBufferedReader = new java.io.BufferedReader(abbreviationsFileReader);
+            
+            while((line = abbreviationsBufferedReader.readLine()) != null) {
+                this.categoryComboBox.addItem(line);
+            }
+        } catch(Exception ex) {
+            System.out.println("In BrowseItemsPanel() --" + ex.toString());
+        }
     }
 
     /**
@@ -35,20 +54,10 @@ public class BrowseItemsPanel extends javax.swing.JPanel {
         searchByIDLabel = new javax.swing.JLabel();
         IDSearchTextField = new javax.swing.JTextField();
         IDSearchLabel = new javax.swing.JLabel();
-        transformersComboBox = new javax.swing.JComboBox<>();
-        transformersLabel = new javax.swing.JLabel();
-        resistorsComboBox = new javax.swing.JComboBox<>();
-        resistorsLabel = new javax.swing.JLabel();
-        capacitorsComboBox = new javax.swing.JComboBox<>();
-        capacitorsLabel = new javax.swing.JLabel();
-        fusesComboBox = new javax.swing.JComboBox<>();
-        fusesLabel = new javax.swing.JLabel();
-        breakersComboBox = new javax.swing.JComboBox<>();
-        breakersLabel = new javax.swing.JLabel();
-        inductorsComboBox = new javax.swing.JComboBox<>();
-        inductorsLabel = new javax.swing.JLabel();
         searchByIDButton = new javax.swing.JButton();
         searchByCategoryButton = new javax.swing.JButton();
+        categoryComboBox = new javax.swing.JComboBox<>();
+        IDSearchLabel1 = new javax.swing.JLabel();
 
         browseItemsLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         browseItemsLabel.setText("Browse Items");
@@ -64,42 +73,6 @@ public class BrowseItemsPanel extends javax.swing.JPanel {
         IDSearchLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         IDSearchLabel.setText("ID");
 
-        transformersComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        transformersComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        transformersLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        transformersLabel.setText("Transformers");
-
-        resistorsComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        resistorsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        resistorsLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        resistorsLabel.setText("Resistors");
-
-        capacitorsComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        capacitorsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        capacitorsLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        capacitorsLabel.setText("Capacitors");
-
-        fusesComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        fusesComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        fusesLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        fusesLabel.setText("Fuses");
-
-        breakersComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        breakersComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        breakersLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        breakersLabel.setText("Breakers");
-
-        inductorsComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        inductorsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        inductorsLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        inductorsLabel.setText("Inductors");
-
         searchByIDButton.setText("Search");
         searchByIDButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,99 +87,68 @@ public class BrowseItemsPanel extends javax.swing.JPanel {
             }
         });
 
+        categoryComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryComboBoxActionPerformed(evt);
+            }
+        });
+
+        IDSearchLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        IDSearchLabel1.setText("Category");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(searchByCategoryLabel)
-                .addGap(393, 393, 393))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(354, 354, 354)
-                        .addComponent(browseItemsLabel))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(browseItemsLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(searchByIDButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(IDSearchLabel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(IDSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(searchByIDLabel, javax.swing.GroupLayout.Alignment.LEADING)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(434, 434, 434)
-                        .addComponent(searchByIDLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(386, 386, 386)
-                        .addComponent(IDSearchLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(IDSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchByIDButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(272, 272, 272)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(capacitorsLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(capacitorsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(resistorsLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(resistorsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(inductorsLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(inductorsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(55, 55, 55)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(transformersLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(transformersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(fusesLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fusesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(breakersLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(breakersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(420, 420, 420)
-                        .addComponent(searchByCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(288, Short.MAX_VALUE))
+                        .addGap(372, 372, 372)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(searchByCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(IDSearchLabel1)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(categoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(searchByCategoryLabel))))
+                .addContainerGap(358, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(browseItemsLabel)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(searchByIDLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(IDSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(IDSearchLabel))
-                    .addComponent(searchByIDButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(IDSearchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IDSearchLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchByIDButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(searchByCategoryLabel)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(transformersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(transformersLabel)
-                    .addComponent(resistorsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(resistorsLabel))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(capacitorsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(capacitorsLabel)
-                    .addComponent(fusesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fusesLabel))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(breakersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(breakersLabel)
-                    .addComponent(inductorsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inductorsLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchByCategoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(51, 51, 51))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(categoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IDSearchLabel1))
+                .addGap(18, 18, 18)
+                .addComponent(searchByCategoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -222,26 +164,20 @@ public class BrowseItemsPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchByCategoryButtonActionPerformed
 
+    private void categoryComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_categoryComboBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDSearchLabel;
+    private javax.swing.JLabel IDSearchLabel1;
     private javax.swing.JTextField IDSearchTextField;
-    private javax.swing.JComboBox<String> breakersComboBox;
-    private javax.swing.JLabel breakersLabel;
     private javax.swing.JLabel browseItemsLabel;
-    private javax.swing.JComboBox<String> capacitorsComboBox;
-    private javax.swing.JLabel capacitorsLabel;
-    private javax.swing.JComboBox<String> fusesComboBox;
-    private javax.swing.JLabel fusesLabel;
-    private javax.swing.JComboBox<String> inductorsComboBox;
-    private javax.swing.JLabel inductorsLabel;
-    private javax.swing.JComboBox<String> resistorsComboBox;
-    private javax.swing.JLabel resistorsLabel;
+    private javax.swing.JComboBox<String> categoryComboBox;
     private javax.swing.JButton searchByCategoryButton;
     private javax.swing.JLabel searchByCategoryLabel;
     private javax.swing.JButton searchByIDButton;
     private javax.swing.JLabel searchByIDLabel;
-    private javax.swing.JComboBox<String> transformersComboBox;
-    private javax.swing.JLabel transformersLabel;
     // End of variables declaration//GEN-END:variables
 }
