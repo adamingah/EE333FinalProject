@@ -170,6 +170,10 @@ public class UserInfo {
         this.billingAddress = billingAddress;
     }
     
+    public String getUserRoleAsString() {
+        return(this.userRole.toString());
+    }
+    
     
     
     
